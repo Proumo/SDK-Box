@@ -1,4 +1,316 @@
 SDK-Box
-=======
+=====
+IDE criada para desenvolvimento rápido e fácil direto do Browser (__Safari__, __Chrome__ ou __FireFox__), com interfaces de fácil manipulação para criação de Addons/Plugins e também de comunicação com __APIs__ (__GitHub__, __Gravatar__, __Twitter__, __Facebook__).
 
-Transforme suas APIs complexas, trabalhosas e chatas em um consumo fácil e simples de um SDK!
+Resumo: IDE de propósito geral que permite fácil criação de plugin e addon e que roda em browsers, que permitam App, e que tem uma fácil interface de comunicação com APIs o que o torna também um SDK.
+
+## Frameworks
+
+* CSS
+  * [Bootstrap 2](http://getbootstrap.com/2.3.2/)
+
+* JavaScript
+  * [AngularJS](http://angularjs.org/)
+  * [Bootstrap](http://getbootstrap.com/2.3.2/javascript.html) (jQuery Plugin)
+  * <del>[jQuery](http://jquery.com/)</del> (Este será usado apenas para alimentar o Bootstrap)
+
+* Icon Fonts
+  * [Foundation Icon 3](http://zurb.com/playground/foundation-icon-fonts-3)
+  * [Font Awesome](http://fontawesome.io/icons/)
+  * [Ico moon](http://icomoon.io/)
+  * <del>[Fontello](http://fontello.com/)</del> (Não recomendável utilizar mais icones deste)
+
+<br><br>
+## Padrões de codificação do SDK
+
+##### Os 10 mandamentos
+-----------------------
+
+##### Mandamentos CSS
+
+1- Width __somente__ com contagem de colunas (__Spans__), sem setagem HardCoded (CSS inline):
+
+```
+ERRADO
+div {
+ width: 2px;
+}
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+<div style="width: 100%">
+```
+
+
+```
+MEUS OLHOS BRILHAM
+<div class="span3">
+ <span></span>
+</div>
+```
+
+2- Sempre removerás margins dos Spans usarando Row, p/ elementos na mesma linha:
+
+```
+ERRADO
+#funcionalidade div {
+ margin: 0;
+}
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+div {
+ margin: 0;
+}
+```
+
+```
+MEUS OLHOS BRILHAM
+<div class="container">
+ <div id="funcionalidade" class="row">
+    <div class="span6"></div>
+    <div class="span6"></div>
+ </div>
+</div>
+```
+
+3- Sempre selecionarás o elemento para estilo acoplando-o a seu elemento pai:
+
+```
+ERRADO
+#funcionalidade div {
+ /* estilo */
+}
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+div {
+ /* estilo */
+}
+```
+
+```
+MEUS OLHOS BRILHAM
+<div id="elemento_pai">
+ <span class="elemento_funcional"></span>
+</div>
+
+#elemento_pai span.elemento_funcional {
+ /* estilo */
+}
+```
+
+##### Mandamentos HTML
+
+4- Usarás as Tags pelo nome até o ponto que for possível
+
+```
+ERRADO
+<div class="header">
+ <div class="nav"></div>
+</div>
+<div class="artigo"></div>
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+<div id="header"></div>
+<div id="nav"></div>
+<div id="artigo"></div>
+```
+
+
+```
+MEUS OLHOS BRILHAM
+<header>
+ <nav></nav>
+</header>
+<article></article>
+```
+
+5- Não utilizarás atributos das tags para manipular estilo
+
+```
+ERRADO && SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+<div bgcolor="black"></div>
+```
+
+```
+MEUS OLHOS BRILHAM
+div.foo {
+ background: black;
+}
+
+<div class="foo"></div>
+```
+
+6- Respeitarás as hierarquias entre as tags
+
+```
+ERRADO && SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+<h2> 
+ <h1></h1> 
+</h2>
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+<span>
+ <div></div>
+</span>
+```
+
+```
+MEUS OLHOS BRILHAM
+<div>
+ <span></span>
+</div>
+```
+
+
+##### Mandamentos JS
+
+7- Manipularás o estilo dinamicamente __sem__ uso do jQuery:
+
+```
+ERRADO
+val = $('#input').val();
+$('.elemento').addClass(val);
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+val = $('form input')[0].val();
+$('.elemento').removeClass(val);
+```
+
+```
+MEUS OLHOS BRILHAM
+<input ng-model="val" />
+<span class="elemento {{ val }}">  </span>
+```
+
+8- Sempre criará seu AngularJS Controller no arquivo de mesmo nome e setá-lo na div mãe da funcionalidade:
+
+```
+ERRADO
+editor_cor_letra.js
+SDKApp.controller('editor_cor_letra', function($scope, $http){
+   // Code
+});
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+EditorCorLetra.js
+SDKApp.controller('Editor_Cor_Letra', function($scope, $http){
+   // Code
+});
+<body ng-controller="Editor_Cor_Letra">
+```
+
+```
+MEUS OLHOS BRILHAM
+--> Aqui pode ser usado o sufixo Controller ou simplesmente Ctrl, qualquer já ajuda
+editor_cor_letra.js
+SDKApp.controller('EditorCorLetraController', function($scope, $http){
+ // Code
+});
+<div ng-controller="EditorCorLetraController">
+ <!-- MarkUp da funcionalidade aqui -->
+</div>
+```
+
+9- Encapsularás suas variáveis dentro de seu Controllers e/ou Models <del> __var global__ </del>:
+
+```
+ERRADO
+var xpto = 'BAD SMELL';
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+var xpto = 'BAD SMELL';
+SDKApp.controller('EditorCorLetra', function($scope, $http){
+   var xpto = 'ferrei tudo de vez';
+});
+```
+
+```
+MEUS OLHOS BRILHAM
+SDKApp.controller('EditorCorLetra', function($scope, $http){
+   var xptolas_loucas = 'GOD LIKE';
+});
+```
+
+10- Funções adicionadas ao escopo serão nome1_nome2 e modelos serão CamelCase:
+
+```
+ERRADO
+SDKApp.controller('EditorCorLetra', function($scope, $http){
+   $scope.funcao_marota = function(){ };
+});
+
+SEU CÓDIGO É TÃO BOM QUE ME DEU ÚLCERA 
+SDKApp.controller('EditorCorLetra', function($scope, $http){
+   $scope.Xpto_Las = 'OLA';
+});
+```
+
+```
+MEUS OLHOS BRILHAM
+SDKApp.controller('EditorCorLetra', function($scope, $http){
+ // Definição do modelo deste escopo de Controller
+ $scope.FuncaoMarota = funcao_marota();
+ 
+ // Definição da função
+ function funcao_marota() { };
+});
+```
+
+
+### CSS
+--------
+Work Flow:
+* Cria a pasta com o nome da funcionalidade/elemento a ser desenvolvida(o), dentro da pasta assets/css/SDK 
+* Cria style_geral.css, dentro do pasta que, importa os outros CSS deste dado elemento/funcionaliade
+
+```
+  @import "nome_css.css";
+```
+
+* Adiciona a linha de código ao Style.css (este só deve conter imports em seu conteúdo)
+
+```
+  @import "nome_elemento/style_geral.css";
+```
+
+### HTML
+--------
+Work Flow:
+
+1- Iniciar sempre colocando uma nova classe Row, __se for para uma nova linha__;
+2- Colocar ID na DIV, ou outro elemento mais plausível, que inicia a funcionalidade
+```
+<div id="funcionalidade_tal" class="row" ng-controller="FuncionalidadeTal">
+ <!-- MarkUp funcionalidade -->
+</div>
+```
+3- colocar o tamanho dos componentes em função dos spans, vide [GridSystem](http://getbootstrap.com/2.3.2/scaffolding.html#fluidGridSystem)
+
+
+### AngularJS
+--------
+Work Flow:
+1- por na div mãe da funcionalidade o Controller:
+
+```
+<div ng-controller="AtividadeCtrl">
+ <!-- markup funcionalidade aqui -->
+</div>
+```
+
+2- adicionar o controller ao app:
+
+```
+SDKApp.controller('AtividadeCtrl', function ($scope, $http) {
+ // Código aqui
+});
+```
+
+3- Adicionará o $scope mediante a necessidade de models:
+
+```
+SDKApp.controller('AtividadeCtrl', function ($scope, $http) {
+ $scope.nome_usuario = function() {
+  // Lógica do modelo
+ }
+});
+```
