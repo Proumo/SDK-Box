@@ -1,0 +1,1 @@
+var SDKApp = angular.module('SDKApp', ['ngSanitize']);
