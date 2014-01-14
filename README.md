@@ -314,3 +314,11 @@ SDKApp.controller('AtividadeCtrl', function ($scope, $http) {
  }
 });
 ```
+
+##### IDEs e Editores de Texto
+Este repositório contém códigos feitos utilizando:
+1- Sublime Text 2 (com Plugin Emmet)
+2- Netbeans 7.3.1
+3- WebStorm 7 (da JetBrains)
+
+__Obs:__ Pode ser utilizada qualquer IDE e/ou Editor de Texto.
