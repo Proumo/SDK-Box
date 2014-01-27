@@ -4,6 +4,8 @@ IDE criada para desenvolvimento rápido e fácil direto do Browser (__Safari__, 
 
 Resumo: IDE de propósito geral que permite fácil criação de plugin e addon e que roda em browsers, que permitam App, e que tem uma fácil interface de comunicação com APIs o que o torna também um SDK.
 
+[__Marque uma estrela em nosso projeto clicando aqui, OBRIGADO! :D__](https://github.com/Proumo/SDK-Box)
+
 ## Frameworks
 
 * CSS
